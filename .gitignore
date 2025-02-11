@@ -1,2 +1,3 @@
 .nvimlog
 node_modules/
+dist/

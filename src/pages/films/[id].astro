@@ -7,24 +7,26 @@ const { id } = Astro.params;
 const movie = getMovieById(id);
 
 if (!movie) {
-  // If no movie is found, throw an error to generate a 404.
   throw new Error(`Movie with id "${id}" not found.`);
 }
 ---
-
 <BaseLayout title={movie.title}>
-  <div style="max-width: 800px; margin: auto; padding: 1rem;">
-    <h2>{movie.title}</h2>
-    <p><strong>Genre:</strong> {movie.genre}</p>
-    <p>{movie.description}</p>
-    <img src={movie.posterUrl} alt={movie.title} style="width: 100%; border-radius: 4px; margin-bottom: 1rem;" />
-    
-    <!-- Payment integration placeholder -->
-    <button style="padding: 0.5rem 1rem; background: #444; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 1rem;">
-      Pay to Watch
-    </button>
-    
-    <!-- Video player for streaming the film -->
-    <VideoPlayer src={movie.videoUrl} client:load />
+  <div class="container mx-auto py-8">
+    <div class="card lg:card-side bg-neutral shadow-xl">
+      <figure>
+        <img src={movie.posterUrl} alt={movie.title} class="w-full max-w-md"/>
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title">{movie.title}</h2>
+        <p><strong>Genre:</strong> {movie.genre}</p>
+        <p>{movie.description}</p>
+        <div class="card-actions justify-start mt-4">
+          <button class="btn btn-primary">Pay to Watch</button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8">
+      <VideoPlayer src={movie.videoUrl} client:load />
+    </div>
   </div>
 </BaseLayout>
