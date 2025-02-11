@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FilmGrid from '../components/FilmGrid.svelte';
+import { getMovies } from '../data/moviesStore.js';
+
+// Get the list of movies (those added via the dashboard)
+const movies = getMovies();
+---
+
+<BaseLayout title="Indie Film Streaming">
+  <h2 style="text-align: center; margin-top: 1rem;">Available Films</h2>
+  <!-- The client:load directive hydrates the Svelte component on the client -->
+  <FilmGrid films={movies} client:load />
+</BaseLayout>

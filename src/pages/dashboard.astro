@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DashboardForm from '../components/DashboardForm.svelte';
+---
+
+<BaseLayout title="Dashboard">
+  <h2 style="text-align: center; margin-top: 1rem;">Filmmaker Dashboard</h2>
+  <DashboardForm client:load />
+</BaseLayout>

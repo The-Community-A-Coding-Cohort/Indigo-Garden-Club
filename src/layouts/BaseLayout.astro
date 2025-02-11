@@ -1,0 +1,27 @@
+---
+const { title = "Indie Film Streaming" } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <header style="padding: 1rem; background: #111;">
+      <h1>{title}</h1>
+      <nav>
+        <a href="/" style="color: #fff; margin-right: 1rem;">Home</a>
+        <a href="/dashboard" style="color: #fff; margin-right: 1rem;">Dashboard</a>
+        <a href="/auth" style="color: #fff;">Login</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer style="padding: 1rem; background: #111; text-align: center;">
+      &copy; 2025 Indie Film Streaming
+    </footer>
+  </body>
+</html>
