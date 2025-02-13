@@ -1,0 +1,32 @@
+---
+import { parse } from 'cookie';
+import { verifyToken } from '../utils/auth.js';
+
+export async function get({ request, redirect }) {
+  const cookies = parse(request.headers.get('cookie') || '');
+  const token = cookies['auth_token'];
+
+  if (!token) {
+    return redirect('/');
+  }
+
+  try {
+    verifyToken(token);
+    // If verify is successful, show the browse page
+  } catch (error) {
+    // Invalid token or expired
+    return redirect('/');
+  }
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Browse Films</title>
+  </head>
+  <body>
+    <h1>Welcome to Browse</h1>
+    <p>Protected content here...</p>
+  </body>
+</html>
