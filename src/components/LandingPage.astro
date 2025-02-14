@@ -1,0 +1,22 @@
+---
+import FilmGrid from './FilmGrid.astro';
+---
+
+<style>
+  :global(body) {
+    color: rgb(229, 229, 229);
+  }
+</style>
+
+
+<div class="min-h-screen">
+  <!-- <div class="container mx-auto px-4"> -->
+    
+    <section class="py-8 ">
+      <h2 class="text-xl ml-8 flex items-center">
+        The Secret Theater <span class="mx-2">/</span> <span class="text-sm text-gray-400">Indie Film Streaming</span>
+      </h2>
+      <FilmGrid />
+    </section>
+  <!-- </div> -->
+</div>

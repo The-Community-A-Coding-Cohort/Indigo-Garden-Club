@@ -1,7 +1,7 @@
 ---
 import { parse } from 'cookie';
 import { verifyToken } from '../utils/auth.js';
-import LandingPage from '../components/LandingPage.svelte'; // We'll create a simple Svelte component
+import LandingPage from '../components/LandingPage.astro'; // We'll create a simple Svelte component
 
 export async function get({ request, redirect }) {
   const cookies = parse(request.headers.get('cookie') || '');
