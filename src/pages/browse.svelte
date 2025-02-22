@@ -1,5 +1,5 @@
 <script>
-import FilmGrid from "./FilmGrid.svelte";
+import FilmGrid from "../components/FilmGrid.svelte";
 </script>
   
   <style>

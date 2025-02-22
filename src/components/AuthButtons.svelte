@@ -1,27 +1,30 @@
 <script>
-    function goToBrowse() {
-      window.location.href = '/browse';
+    function goToBrowse(event) {
+      event.preventDefault();
+      // Use assign() for a full redirect
+      window.location.assign('/browse');
     }
   </script>
   
   <style>
     .auth-buttons {
-      margin-top: 24px;
       display: flex;
-      gap: 16px;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
     }
     button {
-      padding: 10px 20px;
-      background: #0070f3;
+      padding: 12px 24px;
+      background-color: #0070f3;
       color: #fff;
       border: none;
       border-radius: 4px;
-      cursor: pointer;
       font-size: 1rem;
+      cursor: pointer;
       transition: background 0.3s ease;
     }
     button:hover {
-      background: #005bb5;
+      background-color: #005bb5;
     }
   </style>
   
