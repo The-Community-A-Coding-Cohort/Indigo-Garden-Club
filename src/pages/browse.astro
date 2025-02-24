@@ -1,32 +1,22 @@
 ---
-import { parse } from 'cookie';
-import { verifyToken } from '../utils/auth.js';
-
-export async function get({ request, redirect }) {
-  const cookies = parse(request.headers.get('cookie') || '');
-  const token = cookies['auth_token'];
-
-  if (!token) {
-    return redirect('/');
-  }
-
-  try {
-    verifyToken(token);
-    // If verify is successful, show the browse page
-  } catch (error) {
-    // Invalid token or expired
-    return redirect('/');
-  }
-}
+import FilmGrid from '../components/FilmGrid.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Browse Films</title>
-  </head>
-  <body>
-    <h1>Welcome to Browse</h1>
-    <p>Protected content here...</p>
-  </body>
-</html>
+<style>
+  :global(body) {
+    color: rgb(229, 229, 229);
+  }
+</style>
+
+
+<div class="min-h-screen">
+  <!-- <div class="container mx-auto px-4"> -->
+    
+    <section class="py-8 ">
+      <h2 class="text-xl ml-8 flex items-center">
+        The Secret Theater <span class="mx-2">/</span> <span class="text-sm text-gray-400">Indie Film Streaming</span>
+      </h2>
+      <FilmGrid />
+    </section>
+  <!-- </div> -->
+</div>
