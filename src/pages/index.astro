@@ -1,6 +1,7 @@
 ---
 import Carousel from '../components/Carousel.svelte';
 import AuthButtons from '../components/AuthButtons.svelte';
+
 ---
 <html lang="en">
   <head>
@@ -19,7 +20,7 @@ import AuthButtons from '../components/AuthButtons.svelte';
       <!-- Carousel of movies -->
       <Carousel />
       <!-- Log In / Sign Up buttons -->
-      <AuthButtons />
+      <AuthButtons client:load />
     </main>
   </body>
 </html>
