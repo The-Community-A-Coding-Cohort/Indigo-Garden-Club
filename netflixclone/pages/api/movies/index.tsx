@@ -1,6 +1,4 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-<<<<<<< HEAD
-=======
 
 import prismadb from '../../../lib/prismadb';
 import serverAuth from '../../../lib/serverAuth';
@@ -21,4 +19,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(400).end();
     }
 }
->>>>>>> c26c5d4 (stored changes I'm not going to lose them again, damn NavBar section)
