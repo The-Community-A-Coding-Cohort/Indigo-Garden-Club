@@ -39,8 +39,13 @@ jobs:
           docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Terraform Init, Plan, and Apply
-        working-directory: terraform
+        working-directory: terraform/netflixclone
         run: |
-          terraform init
+          terraform init \
+            -backend-config="bucket=TheCommunityACodingCohort-tf-state-bucket" \
+            -backend-config="key=nextjs/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=terraform-locks" \
+            -backend-config="encrypt=true"
           terraform plan -out=tfplan
           terraform apply -auto-approve tfplan
