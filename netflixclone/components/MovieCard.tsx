@@ -10,6 +10,7 @@ const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
     const router = useRouter();
     
     return (
+        // bg-zinc-900
         <div className="group bg-zinc-900 col-span relative h-[12vw]">
             <img className="cursor-pointer 
             object-cover 
@@ -36,7 +37,7 @@ const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
             scale-0 
             group-hover:scale-110 
             group-hover:translate-y-[6vw] 
-            group-hover:translate-x-[2vw] 
+            group-hover:translate-x-[0vw] 
             group-hover:opacity-100">
                 <img className="cursor-pointer object-cover transition duration shadow-xl rounded-t-md w-full h-[12vw]"
                 src={props.data.thumbnailUrl} alt="Thumbnail"/>
@@ -65,8 +66,8 @@ const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
                         onClick={() => router.push('/watch/${data?.id}')}>
 
                             <BsFillPlayFill size={30}/>
-                            <FavoriteButton movieId={props.data?.id} />
                         </div>
+                        <FavoriteButton movieId={props.data?.id} />
                     </div>
 
                     <p className="text-green-400 font-semibold mt-4">
