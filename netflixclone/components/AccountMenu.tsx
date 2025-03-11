@@ -19,9 +19,8 @@ const AccountMenu: React.FC<AccountMenuProps> = (props: AccountMenuProps) => {
                 </p>
             </div>
             <hr className="bg-gray-600 border-0 h-px my-4"/>
-            <div className="px-3 text-center text-white text-sm hover:underline">
-                Free your soul from this false Netflix
-                (Sign Out)
+            <div onClick={() => signOut()} className="px-3 text-center text-white text-sm hover:underline" >
+                Sign Out
             </div>
         </div>
     )
