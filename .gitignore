@@ -15,8 +15,7 @@ node_modules/
 /coverage
 
 # next.js
-/.next/
-/out/
+netflixclone/.next/
 
 # production
 /build
