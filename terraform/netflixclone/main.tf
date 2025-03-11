@@ -8,7 +8,7 @@ terraform {
   required_version = ">= 1.0.0"
 
   backend "s3" {
-    bucket         = "TheCommunity-terraform-state-bucket"      
+    bucket         = "the-community-a-coding-cohort-tf-state-bucket"      
     key            = "nextjs/terraform.tfstate"        
     region         = "us-east-1"                       
     dynamodb_table = "terraform-locks"                  

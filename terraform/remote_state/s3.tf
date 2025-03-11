@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "TheCommunityACodingCohort-tf-state-bucket"
+  bucket = "the-community-a-coding-cohort-tf-state-bucket"
 
   tags = {
     Name        = "Terraform State Bucket"
