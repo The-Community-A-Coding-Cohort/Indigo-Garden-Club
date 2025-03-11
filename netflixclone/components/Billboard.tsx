@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import useBillboard from "../hooks/useBillboard";
-// import PlayButton from "./PlayButton";
+import PlayButton from "./PlayButton";
 
 const Billboard = () => {
     const { data } = useBillboard();
