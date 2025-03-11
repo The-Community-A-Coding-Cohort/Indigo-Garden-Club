@@ -38,6 +38,11 @@ jobs:
         run: |
           docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.3.6
+
       - name: Terraform Init, Plan, and Apply
         working-directory: terraform/netflixclone
         run: |

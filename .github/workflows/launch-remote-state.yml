@@ -18,6 +18,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.3.6
+
       - name: Terraform Init (Remote State)
         working-directory: terraform/remote_state
         run: terraform init
