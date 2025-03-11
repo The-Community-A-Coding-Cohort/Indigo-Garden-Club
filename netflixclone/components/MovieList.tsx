@@ -1,12 +1,13 @@
 import React from "react";
 import {isEmpty} from 'lodash';
+import MovieCard from "./MovieCard";
 
 interface MovieListProps {
     data: Record<string, any>[];
     title: string;
 }
 const MovieList: React.FC<MovieListProps> = (props: MovieListProps) => {
-    if(isEmpty(props.data)){
+    if(isEmpty(props?.data)){
         return null;
     }
     return (
@@ -14,8 +15,10 @@ const MovieList: React.FC<MovieListProps> = (props: MovieListProps) => {
             <p className="text-white text-md md:text-xl lg:text-2xl font-semibold mb-4">
                 {props.title}
             </p>
-            <div>
-                
+            <div className="grid grid-cols-4 gap-2">
+                {props.data.map((movie) => (
+                    <MovieCard key={movie.id} data={movie} />
+                ))}
             </div>
         </div>
     )

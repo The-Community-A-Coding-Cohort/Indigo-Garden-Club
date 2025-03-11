@@ -10,7 +10,6 @@ const MobileMenu: React.FC<MobileMenuProps> = (props: MobileMenuProps) => {
     return (
         <div className="bg-black w-56 absolute top-8 left-0 py-5 flex-col border-2 border-gray-800 flex">
             <div className="flex flex-col gap-4">
-
                 <div className="px-3 text-center text-white hover:underline">
                     Home
                 </div>
@@ -27,9 +26,8 @@ const MobileMenu: React.FC<MobileMenuProps> = (props: MobileMenuProps) => {
                     My List
                 </div>
                 <div className="px-3 text-center text-white hover:underline">
-                    Browse by languages
+                    Browse by Languages
                 </div>
-                
             </div>
         </div>
     )
