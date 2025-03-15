@@ -13,6 +13,7 @@ const InfoModal: React.FC<InfoModalProps> = (props: InfoModalProps) => {
     const [isVisible, setIsVisible] = useState(!!props.visible);
 
     const { movieId } = useInfoModal();
+    console.log(`in InfoModal.tsx ${movieId}`);
     const { data = {} } = useMovie(movieId);
 
     useEffect(() => {
