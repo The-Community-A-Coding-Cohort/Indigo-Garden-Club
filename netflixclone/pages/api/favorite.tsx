@@ -6,9 +6,7 @@ import serverAuth from '../../lib/serverAuth';
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     try {
         if(req.method === 'POST'){
-            // console.log('in favorite.tsx before')
-            console.log(req.setTimeout(977));
-            const { currentUser } = await serverAuth(req);
+            const { currentUser } = await serverAuth(req, res);
             // console.log('in favorite.tsx after')
             const { movieId } = req.body;
             const existingMovie = await prismadb.movie.findUnique({
@@ -36,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         if(req.method === 'DELETE'){
             console.log('DELETE in favorite.tsx')
-            const { currentUser } = await serverAuth(req);
+            const { currentUser } = await serverAuth(req, res);
             const { movieId } = req.body;
             const existingMovie = await prismadb.movie.findUnique({
                 where: {
