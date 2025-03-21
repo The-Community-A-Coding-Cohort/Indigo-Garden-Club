@@ -7,7 +7,7 @@ const useBillboard = () => {
         revalidateOnFocus: false,
         revalidateOnReconnect: false
     })
-    // console.log(data) // todo enable and you'll notice a lot of rerendering
+    console.log(data) // todo enable and you'll notice a lot of rerendering
     return {data, error, isLoading};
 }
 export default useBillboard;

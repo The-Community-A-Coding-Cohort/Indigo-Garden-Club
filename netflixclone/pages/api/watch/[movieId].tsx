@@ -7,6 +7,8 @@ const Watch = () => {
     const router = useRouter();
     const { movieId } = router.query;
 
+    console.log("MovieID:" + movieId);
+
     const { data } = useMovie(movieId as string);
 
     return (
@@ -39,3 +41,5 @@ const Watch = () => {
         </div>
     )
 }
+
+export default Watch;
