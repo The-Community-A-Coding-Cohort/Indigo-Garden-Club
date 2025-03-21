@@ -1,5 +1,22 @@
 import axios from 'axios';
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+// Create an Axios instance with credentials enabled
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '',
+  withCredentials: true, // Ensure cookies are sent with every request
+});
 
-export default fetcher;
+// Helper function for GET requests
+export const getData = (url: string) =>
+  axiosInstance.get(url).then(response => response.data);
+
+// Helper function for POST requests
+export const postData = (url: string, data: any) =>
+  axiosInstance.post(url, data).then(response => response.data);
+
+// Helper function for DELETE requests
+export const deleteData = (url: string, data: any) =>
+    axiosInstance.delete(url, data).then(response => response.data);
+
+// Export the instance if needed elsewhere
+export default axiosInstance;

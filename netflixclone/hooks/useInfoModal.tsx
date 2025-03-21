@@ -10,10 +10,7 @@ export interface ModalStoreInterface {
 const useInfoModal = create<ModalStoreInterface>((set) => ({
     movieId: undefined,
     isOpen: false,
-    openModal: (movieId: string) => {
-        console.log('openModal in useInfoModal.tsx')
-        set({isOpen:true, movieId})
-    },
+    openModal: (movieId: string) => {set({isOpen:true, movieId})},
     closeModal: () => set({isOpen: false, movieId: undefined}),
 }));
 
