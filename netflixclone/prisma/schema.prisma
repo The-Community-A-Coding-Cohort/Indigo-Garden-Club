@@ -68,7 +68,7 @@ model Movie {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   description String
-  videoUrl String
+  videoURL String
   thumbnailUrl String
   genre String
   duration String

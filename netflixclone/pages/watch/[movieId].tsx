@@ -1,11 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import useMovie from "../../../hooks/useMovie";
+import useMovie from "../../hooks/useMovie";
 
 const Watch = () => {
     const router = useRouter();
     const { movieId } = router.query;
+
+    console.log("MovieID:" + movieId);
 
     const { data } = useMovie(movieId as string);
 
@@ -35,7 +37,9 @@ const Watch = () => {
             autoPlay
             controls
             className="h-full w-full"
-            src={data?.videoUrl}></video>
+            src={data?.videoURL}></video>
         </div>
     )
 }
+
+export default Watch;
