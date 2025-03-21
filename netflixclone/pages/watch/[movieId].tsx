@@ -37,7 +37,7 @@ const Watch = () => {
             autoPlay
             controls
             className="h-full w-full"
-            src={data?.videoUrl}></video>
+            src={data?.videoURL}></video>
         </div>
     )
 }
