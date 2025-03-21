@@ -3,6 +3,7 @@ import MobileMenu from "./MobileMenu";
 import NavbarItem from "./NavbarItem";
 import { BsBell, BsChevronDown, BsSearch } from "react-icons/bs";
 import AccountMenu from "./AccountMenu";
+import Image from 'next/image';
 
 const TOP_OFFSET = 66;
 
@@ -47,7 +48,7 @@ const Navbar = () => {
             bg-opacity-90
             ${showBackground ? 'bg-zinc-900 bg-opacity-90': ''}`}>
                 
-                <img className="h-4 lg:h-7" src="/images/netflixLogo.png" alt="logo" />
+                <Image className="h-4 lg:h-7" src="/images/netflixLogo.png" alt="logo" />
                 <div className="
                 flex-row
                 ml-8
@@ -76,7 +77,7 @@ const Navbar = () => {
                     </div>
                     <div onClick={toggleAccountMenu} className="flex flex-row items-center  gap-2 cursor-pointer relative">
                         <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
-                            <img src="/images/blueDefaultGuy.jpg" alt="" />
+                            <Image src="/images/blueDefaultGuy.jpg" alt="" />
                         </div>
                         <BsChevronDown className={`text-white transition ${showAccountMenu ? 'rotate-180' : 'rotate-0'}`} />
                         <AccountMenu visible={showAccountMenu} />
