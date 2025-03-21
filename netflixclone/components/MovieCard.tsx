@@ -5,15 +5,23 @@ import FavoriteButton from "./FavoriteButton";
 import useInfoModal from "../hooks/useInfoModal";
 import { BiChevronDown } from "react-icons/bi";
 
-interface MovieCardProps{
-    data: Record<string, any>;
+interface Movie {
+    id: string;
+    thumbnailUrl: string;
+    duration: string;
+    genre: string;
 }
+
+interface MovieCardProps {
+    data: Movie;
+    title: string;
+}
+
 const MovieCard: React.FC<MovieCardProps> = ( {data} ) => {
     const router = useRouter();
     const { openModal } = useInfoModal();
     
     return (
-        // bg-zinc-900
         <div className="group bg-zinc-900 col-span relative h-[12vw]">
             <img className="cursor-pointer 
             object-cover 
