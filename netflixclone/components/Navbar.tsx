@@ -48,7 +48,7 @@ const Navbar = () => {
             bg-opacity-90
             ${showBackground ? 'bg-zinc-900 bg-opacity-90': ''}`}>
                 
-                <Image className="h-4 lg:h-7" src="/images/netflixLogo.png" alt="logo" />
+                <Image className="h-4 lg:h-7" src="/images/netflixLogo.png" alt="logo" width="50" height="10"/>
                 <div className="
                 flex-row
                 ml-8
@@ -77,7 +77,7 @@ const Navbar = () => {
                     </div>
                     <div onClick={toggleAccountMenu} className="flex flex-row items-center  gap-2 cursor-pointer relative">
                         <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
-                            <Image src="/images/blueDefaultGuy.jpg" alt="" />
+                            <Image src="/images/blueDefaultGuy.jpg" alt="" width = "100" height = "100"/>
                         </div>
                         <BsChevronDown className={`text-white transition ${showAccountMenu ? 'rotate-180' : 'rotate-0'}`} />
                         <AccountMenu visible={showAccountMenu} />

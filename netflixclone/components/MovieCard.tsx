@@ -4,7 +4,6 @@ import { BsFillPlayFill } from "react-icons/bs";
 import FavoriteButton from "./FavoriteButton";
 import useInfoModal from "../hooks/useInfoModal";
 import { BiChevronDown } from "react-icons/bi";
-import Image from 'next/image';
 
 interface Movie {
     id: string;
@@ -24,7 +23,7 @@ const MovieCard: React.FC<MovieCardProps> = ( {data} ) => {
     
     return (
         <div className="group bg-zinc-900 col-span relative h-[12vw]">
-            <Image className="cursor-pointer 
+            <img className="cursor-pointer 
             object-cover 
             transition 
             duration 
@@ -51,7 +50,7 @@ const MovieCard: React.FC<MovieCardProps> = ( {data} ) => {
             group-hover:translate-y-[6vw] 
             group-hover:translate-x-[0vw] 
             group-hover:opacity-100">
-                <Image className="cursor-pointer object-cover transition duration shadow-xl rounded-t-md w-full h-[12vw]"
+                <img className="cursor-pointer object-cover transition duration shadow-xl rounded-t-md w-full h-[12vw]"
                 src={data?.thumbnailUrl} alt="Thumbnail"/>
                 <div className="z-10 
                 bg-zinc-800 
