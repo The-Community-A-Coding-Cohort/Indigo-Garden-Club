@@ -1,6 +1,5 @@
-import {getSession, signOut} from 'next-auth/react';
+import {getSession} from 'next-auth/react';
 import {NextPageContext} from 'next';
-import useCurrentUser from '../hooks/useCurrentUser';
 import Navbar from '../components/Navbar';
 import Billboard from '../components/Billboard';
 import MovieList from '../components/MovieList'

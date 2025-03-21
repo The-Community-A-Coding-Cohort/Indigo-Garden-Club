@@ -11,12 +11,12 @@ export const getData = (url: string) =>
   axiosInstance.get(url).then(response => response.data);
 
 // Helper function for POST requests
-export const postData = (url: string, data: any) =>
-  axiosInstance.post(url, data).then(response => response.data);
+export const postData = <T>(url: string, data: unknown): Promise<T> =>
+    axiosInstance.post(url, data).then((response) => response.data);
 
 // Helper function for DELETE requests
-export const deleteData = (url: string, data: any) =>
-    axiosInstance.delete(url, data).then(response => response.data);
+export const deleteData = <T>(url: string, data?: unknown): Promise<T> =>
+    axiosInstance.delete<T>(url, { data }).then(response => response.data);
 
 // Export the instance if needed elsewhere
 export default axiosInstance;

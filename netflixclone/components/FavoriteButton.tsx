@@ -1,17 +1,22 @@
-import axios from "axios";
 import React, { useCallback, useMemo } from 'react';
 import { AiOutlinePlus, AiOutlineCheck } from "react-icons/ai";
 import useCurrentUser from "../hooks/useCurrentUser";
 import useFavorites from "../hooks/useFavorites";
-import { postData } from '../lib/fetcher';
+import { postData, deleteData } from '../lib/fetcher';
 
 interface FavoriteButtonProps{
     movieId: string
 }
+interface UserResponse {
+    success: boolean;
+    message: string;
+    favoriteIds: string[];
+  }
+
 const FavoriteButton: React.FC<FavoriteButtonProps> = (props: FavoriteButtonProps) => {
     const { mutate: mutateFavorites } = useFavorites(); //?
     const { data: currentUser, mutate } = useCurrentUser();
-    let movieId = props.movieId;
+    const movieId = props.movieId;
 
     const isFavorite: boolean = useMemo(() => {
         const list = currentUser?.favoriteIds || [];
@@ -22,12 +27,12 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = (props: FavoriteButtonProp
         let response;
 
         if(isFavorite){
-            response = await axios.delete('/api/favorite', {data: {movieId}});
+            response = await deleteData('/api/favorite', { id: movieId }) as UserResponse;
         } else {
-            response = await postData('/api/favorite', {movieId});
+            response = await postData('/api/favorite', {movieId}) as UserResponse;
         }
 
-        const updatedFavoriteIds = response?.data?.favoriteIds;
+        const updatedFavoriteIds = response?.favoriteIds;
 
         mutate({
             ...currentUser,
