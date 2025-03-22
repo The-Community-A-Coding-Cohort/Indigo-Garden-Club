@@ -1,0 +1,15 @@
+name: Unlock tfstate (Admin only)
+
+on:
+  workflow_dispatch:
+  inputs:
+      lock_id:
+        description: 'Terraform Lock ID to unlock'
+        required: true
+        type: string
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Terraform Force Unlock (if needed)
+        run: terraform force-unlock -force <LOCK_ID>
