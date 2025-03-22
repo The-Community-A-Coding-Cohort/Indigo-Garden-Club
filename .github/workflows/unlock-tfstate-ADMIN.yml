@@ -37,4 +37,5 @@ jobs:
             -backend-config="encrypt=true"
 
       - name: Terraform Force Unlock (if needed)
+        working-directory: terraform/netflixclone
         run: terraform force-unlock -force ${{ github.event.inputs.lock_id }}
