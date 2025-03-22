@@ -35,6 +35,6 @@ jobs:
             -backend-config="region=us-east-1" \
             -backend-config="dynamodb_table=terraform-locks" \
             -backend-config="encrypt=true"
-            
+
       - name: Terraform Force Unlock (if needed)
-        run: terraform force-unlock -force <LOCK_ID>
+        run: terraform force-unlock -force ${{ github.event.inputs.lock_id }}
