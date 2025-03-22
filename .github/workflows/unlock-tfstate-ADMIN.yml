@@ -2,11 +2,11 @@ name: Unlock tfstate (Admin only)
 
 on:
   workflow_dispatch:
-  inputs:
-      lock_id:
-        description: 'Terraform Lock ID to unlock'
-        required: true
-        type: string
+    inputs:
+        lock_id:
+          description: 'Terraform Lock ID to unlock'
+          required: true
+          type: string
 jobs:
   destroy:
     runs-on: ubuntu-latest
