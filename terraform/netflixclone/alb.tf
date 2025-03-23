@@ -2,7 +2,7 @@ resource "aws_lb" "alb" {
   name               = "nextjs-alb"
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = aws_subnet.public
+  subnets            = [for subnet in aws_subnet.public : subnet.id]
 
   depends_on = [ aws_subnet.public ]
 }
