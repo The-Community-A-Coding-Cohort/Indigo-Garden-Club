@@ -12,6 +12,6 @@ variable "hosted_zone_id" {
   description = "Route53 Hosted Zone ID"
 }
 
-variable "alidation_record_fqdns" {
+variable "validation_record_fqdns" {
   description = "Full FQDNS of domain"
 }
