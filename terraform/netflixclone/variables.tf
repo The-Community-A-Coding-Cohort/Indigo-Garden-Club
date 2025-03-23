@@ -5,6 +5,7 @@ variable "region" {
 
 variable "domain_name" {
   description = "Domain name for the app (e.g., app.example.com)"
+  default = "indigofool.com"
 }
 
 variable "hosted_zone_id" {
