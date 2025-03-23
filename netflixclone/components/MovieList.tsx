@@ -12,10 +12,9 @@ interface Movie {
 
 interface MovieListProps {
   data: Movie[] | { [key: string]: Movie }; // Accept either an array or an object with movie values.
-  title: string;
 }
 
-const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
+const MovieList: React.FC<MovieListProps> = ({ data }) => {
   if (isEmpty(data)) {
     return null;
   }
@@ -29,13 +28,10 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
   }
 
   return (
-    <div className="px-4 md:px-12 mt-4 space-y-8">
-      <p className="text-white text-md md:text-xl lg:text-2xl font-semibold mb-4">
-        {title}
-      </p>
-      <div className="grid grid-cols-4 gap-2">
+    <div className="px-4  mt-4 space-y-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         {movies.map((movie) => (
-          <MovieCard key={movie.id} data={movie} title={movie.title}/>
+          <MovieCard key={movie.id} data={movie} title={movie.title} />
         ))}
       </div>
     </div>
