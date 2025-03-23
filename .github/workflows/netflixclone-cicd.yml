@@ -48,6 +48,8 @@ jobs:
 
       - name: Terraform Init, Import, Plan, and Apply
         working-directory: terraform/netflixclone
+        env:
+          TF_VAR_hosted_zone_id: ${{ secrets.HOSTED_ZONE_ID }}
         run: |
           terraform init \
             -backend-config="bucket=the-community-a-coding-cohort-tf-state-bucket" \
@@ -55,8 +57,7 @@ jobs:
             -backend-config="region=us-east-1" \
             -backend-config="dynamodb_table=terraform-locks" \
             -backend-config="encrypt=true"
-          terraform import aws_ecr_repository.nextjs nextjs \
-            -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}"
+          terraform import aws_ecr_repository.nextjs nextjs
           terraform plan \
             -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
             -out=tfplan
