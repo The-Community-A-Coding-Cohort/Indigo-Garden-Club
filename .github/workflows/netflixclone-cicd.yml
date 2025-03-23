@@ -6,7 +6,27 @@ on:
       - main
 
 jobs:
+  # Filter job that detects changes in specific paths
+  filter:
+    runs-on: ubuntu-latest
+    outputs:
+      source_changed: ${{ steps.filter.outputs.source }}
+      terraform_changed: ${{ steps.filter.outputs.terraform }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Filter changed files
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            source:
+              - 'netflixclone/**'
+              - '.github/workflows/**'
+            terraform:
+              - 'terraform/**'
   build:
+    needs: filter
+    if: needs.filter.outputs.source == 'true'
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: nextjs
@@ -39,7 +59,7 @@ jobs:
           docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
 
   deploy:
-    needs: build
+    needs: [filter, build]
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: nextjs

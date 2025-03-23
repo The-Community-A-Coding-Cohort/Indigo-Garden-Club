@@ -13,12 +13,12 @@ resource "aws_route53_record" "cert_validation" {
       name   = dvo.resource_record_name
       type   = dvo.resource_record_type
       record = dvo.resource_record_value
-  } }
+  } ... }  # The ellipsis groups duplicate keys into a list
 
   zone_id = var.hosted_zone_id
-  name    = each.value.name
-  type    = each.value.type
-  records = [each.value.record]
+  name    = each.value[0].name
+  type    = each.value[0].type
+  records = [each.value[0].record]
   ttl     = 60
 
   lifecycle {
