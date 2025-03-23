@@ -51,7 +51,7 @@ resource "aws_ecs_service" "service" {
   desired_count   = 1
 
   network_configuration {
-    subnets         = var.subnets
+    subnets         = aws_subnet.public
     security_groups = [aws_security_group.ecs_sg.id]
     assign_public_ip = true
   }
@@ -62,5 +62,5 @@ resource "aws_ecs_service" "service" {
     container_port   = 3000
   }
 
-  depends_on = [aws_lb_listener.https]
+  depends_on = [aws_lb_listener.https, aws_subnet.public]
 }

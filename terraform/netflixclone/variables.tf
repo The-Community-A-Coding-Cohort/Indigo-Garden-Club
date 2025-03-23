@@ -11,12 +11,3 @@ variable "domain_name" {
 variable "hosted_zone_id" {
   description = "Route53 Hosted Zone ID"
 }
-
-variable "vpc_id" {
-  description = "The VPC ID where resources will be deployed"
-}
-
-variable "subnets" {
-  description = "List of public subnet IDs for the ALB and ECS tasks"
-  type        = list(string)
-}
