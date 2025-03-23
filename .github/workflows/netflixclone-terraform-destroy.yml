@@ -23,7 +23,7 @@ jobs:
           terraform_version: 1.3.6
 
       - name: Terraform Init
-        working-directory: terraform
+        working-directory: terraform/netflixclone
         run: |
           terraform init \
             -backend-config="bucket=the-community-a-coding-cohort-tf-state-bucket" \
@@ -33,6 +33,6 @@ jobs:
             -backend-config="encrypt=true"
 
       - name: Terraform Destroy
-        working-directory: terraform
+        working-directory: terraform/netflixclone
         run: |
           terraform destroy -auto-approve
