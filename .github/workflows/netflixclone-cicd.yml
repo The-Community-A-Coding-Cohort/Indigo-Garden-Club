@@ -46,14 +46,14 @@ jobs:
       - name: Terraform Init, Plan, and Apply
         working-directory: terraform/netflixclone
         run: |
-          terraform -chdir=terraform/netflixclone init \
+          terraform init \
             -backend-config="bucket=the-community-a-coding-cohort-tf-state-bucket" \
             -backend-config="key=nextjs/terraform.tfstate" \
             -backend-config="region=us-east-1" \
             -backend-config="dynamodb_table=terraform-locks" \
             -backend-config="encrypt=true"
-          terraform -chdir=terraform/netflixclone plan \ 
-            -var "hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
-            -var "vpc_id=${{ secrets.INDIGO_FOOL_VPC_ID }}" \
+          terraform plan \ 
+            -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
+            -var="vpc_id=${{ secrets.INDIGO_FOOL_VPC_ID }}" \
             -out=tfplan
-          terraform -chdir=terraform/netflixclone apply -auto-approve tfplan
+          terraform apply -auto-approve tfplan
