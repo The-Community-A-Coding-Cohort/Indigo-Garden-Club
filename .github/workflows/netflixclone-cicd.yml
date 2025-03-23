@@ -6,12 +6,11 @@ on:
       - main
 
 jobs:
-  # Filter job that detects changes in specific paths
   filter:
     runs-on: ubuntu-latest
     outputs:
-      source_changed: ${{ steps.filter.outputs.source }}
-      terraform_changed: ${{ steps.filter.outputs.terraform }}
+      source: ${{ steps.filter.outputs.source }}
+      terraform: ${{ steps.filter.outputs.terraform }}
     steps:
       - uses: actions/checkout@v3
       - name: Filter changed files
@@ -24,10 +23,12 @@ jobs:
               - '.github/workflows/**'
             terraform:
               - 'terraform/**'
+
   build:
     needs: filter
-    if: needs.filter.outputs.source == 'true'
     runs-on: ubuntu-latest
+    outputs:
+      built: ${{ steps.build_image.outputs.built }}
     env:
       ECR_REPOSITORY: nextjs
       IMAGE_TAG: latest
@@ -46,17 +47,19 @@ jobs:
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Docker Image
+      - name: Build and Push Docker Image if Source Changed
+        id: build_image
         run: |
-          docker build -t $ECR_REPOSITORY:latest -f netflixclone/Dockerfile netflixclone
-
-      - name: Tag Docker Image
-        run: |
-          docker tag $ECR_REPOSITORY:latest ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
-
-      - name: Push Docker Image to ECR
-        run: |
-          docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+          if [ "${{ needs.filter.outputs.source }}" == "true" ]; then
+            echo "Source changes detected. Building Docker image..."
+            docker build -t $ECR_REPOSITORY:latest -f netflixclone/Dockerfile netflixclone
+            docker tag $ECR_REPOSITORY:latest ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+            docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+            echo "::set-output name=built::true"
+          else
+            echo "No source changes detected. Skipping build."
+            echo "::set-output name=built::false"
+          fi
 
   deploy:
     needs: [filter, build]
@@ -84,11 +87,8 @@ jobs:
         with:
           terraform_version: 1.3.6
 
-      - name: Terraform Init, Import, Plan, and Apply
+      - name: Terraform Init, Plan, and Apply
         working-directory: terraform/netflixclone
-        # env:
-        #   TF_VAR_hosted_zone_id: ${{ secrets.HOSTED_ZONE_ID }}
-        #   TF_VAR_ecr_repository_url: ${{ secrets.ECR_REPOSITORY_URL }}
         run: |
           terraform init \
             -backend-config="bucket=the-community-a-coding-cohort-tf-state-bucket" \
