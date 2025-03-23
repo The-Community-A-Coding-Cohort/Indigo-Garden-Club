@@ -23,7 +23,11 @@ resource "aws_route53_record" "cert_validation" {
   ttl     = 60
 
   lifecycle {
-    ignore_changes = [records]
+    ignore_changes = [
+      records,
+      name,
+      type,
+    ]
   }
 }
 
