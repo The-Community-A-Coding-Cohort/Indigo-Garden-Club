@@ -46,7 +46,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: ecr-login
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v1.4.0
 
       - name: Build and Push Docker Image Conditionally
         id: build_image
@@ -56,10 +56,10 @@ jobs:
             docker build -t $ECR_REPOSITORY:${IMAGE_TAG} -f netflixclone/Dockerfile netflixclone
             docker tag $ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
             docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
-            echo "::set-output name=built::true"
+            echo "built=true" >> "$GITHUB_OUTPUT"
           else
             echo "No source changes detected. Skipping build."
-            echo "::set-output name=built::false"
+            echo "built=false" >> "$GITHUB_OUTPUT"
           fi
 
   deploy:
@@ -81,8 +81,8 @@ jobs:
 
       - name: Login to Amazon ECR
         id: ecr-login
-        uses: aws-actions/amazon-ecr-login@v1
-
+        uses: aws-actions/amazon-ecr-login@v1.4.0
+      
       - name: Deploy Secrets to AWS Secrets Manager and get ARN
         id: deploy_secrets
         run: |
@@ -118,8 +118,7 @@ jobs:
           SECRET_ARN=$(aws secretsmanager describe-secret --secret-id "$SECRET_NAME" --query 'ARN' --output text)
           echo "Secret ARN: $SECRET_ARN"
           
-          # Set the secret ARN as an output for later steps
-          echo "::set-output name=secret_arn::$SECRET_ARN"
+          echo "secret_arn=$SECRET_ARN" >> "$GITHUB_OUTPUT"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

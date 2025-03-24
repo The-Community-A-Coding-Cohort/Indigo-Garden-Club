@@ -22,8 +22,36 @@ resource "aws_ecs_task_definition" "task" {
       }]
       secrets = [
         {
-          name      = "APP_SECRETS"
-          valueFrom = "${var.secrets_arn}"
+          name      = "DATABASE_URL"
+          valueFrom = "${var.secrets_arn}:DATABASE_URL::"
+        },
+        {
+          name      = "NEXTAUTH_SECRET"
+          valueFrom = "${var.secrets_arn}:NEXTAUTH_SECRET::"
+        },
+        {
+          name      = "NEXTAUTH_URL"
+          valueFrom = "${var.secrets_arn}:NEXTAUTH_URL::"
+        },
+        {
+          name      = "NEXT_PUBLIC_API_BASE_URL"
+          valueFrom = "${var.secrets_arn}:NEXT_PUBLIC_API_BASE_URL::"
+        },
+        {
+          name      = "GIT_CLIENT_ID"
+          valueFrom = "${var.secrets_arn}:GIT_CLIENT_ID::"
+        },
+        {
+          name      = "GIT_CLIENT_SECRET"
+          valueFrom = "${var.secrets_arn}:GIT_CLIENT_SECRET::"
+        },
+        {
+          name      = "GOOGLE_CLIENT_ID"
+          valueFrom = "${var.secrets_arn}:GOOGLE_CLIENT_ID::"
+        },
+        {
+          name      = "GOOGLE_CLIENT_SECRET"
+          valueFrom = "${var.secrets_arn}:GOOGLE_CLIENT_SECRET::"
         }
       ]
       logConfiguration = {
