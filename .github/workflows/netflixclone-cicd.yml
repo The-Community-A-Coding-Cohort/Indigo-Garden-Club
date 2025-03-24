@@ -6,26 +6,8 @@ on:
       - main
 
 jobs:
-  filter:
-    runs-on: ubuntu-latest
-    outputs:
-      source: ${{ steps.filter.outputs.source }}
-      terraform: ${{ steps.filter.outputs.terraform }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Filter changed files
-        id: filter
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            source:
-              - 'netflixclone/**'
-              - '.github/workflows/**'
-            terraform:
-              - 'terraform/**'
 
   build:
-    needs: filter
     runs-on: ubuntu-latest
     outputs:
       built: ${{ steps.build_image.outputs.built }}
@@ -51,19 +33,14 @@ jobs:
       - name: Build and Push Docker Image Conditionally
         id: build_image
         run: |
-          if [ "${{ needs.filter.outputs.source }}" == "true" ]; then
-            echo "Source changes detected. Building Docker image..."
-            docker build -t $ECR_REPOSITORY:${IMAGE_TAG} -f netflixclone/Dockerfile netflixclone
-            docker tag $ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
-            docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
-            echo "built=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "No source changes detected. Skipping build."
-            echo "built=false" >> "$GITHUB_OUTPUT"
-          fi
+          echo "Source changes detected. Building Docker image..."
+          docker build -t $ECR_REPOSITORY:${IMAGE_TAG} -f netflixclone/Dockerfile netflixclone
+          docker tag $ECR_REPOSITORY:${IMAGE_TAG} ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
+          docker push ${{ steps.ecr-login.outputs.registry }}/$ECR_REPOSITORY:${IMAGE_TAG}
+          echo "built=true" >> "$GITHUB_OUTPUT"
 
   deploy:
-    needs: [filter, build]
+    needs: build
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: nextjs
