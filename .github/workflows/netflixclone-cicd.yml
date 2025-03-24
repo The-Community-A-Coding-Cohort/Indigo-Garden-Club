@@ -81,6 +81,48 @@ jobs:
       - name: Login to Amazon ECR
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Deploy Secrets to AWS Secrets Manager and get ARN
+        id: deploy_secrets
+        run: |
+          SECRET_NAME="nextjs-secrets"
+          SECRET_STRING=$(jq -n \
+            --arg DATABASE_URL "${{ secrets.DATABASE_URL }}" \
+            --arg NEXTAUTH_JWT_SECRET "${{ secrets.NEXTAUTH_JWT_SECRET }}" \
+            --arg NEXTAUTH_SECRET "${{ secrets.NEXTAUTH_SECRET }}" \
+            --arg NEXTAUTH_URL "${{ secrets.NEXTAUTH_URL }}" \
+            --arg NEXT_PUBLIC_API_BASE_URL "${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" \
+            --arg GIT_CLIENT_ID "${{ secrets.GIT_CLIENT_ID }}" \
+            --arg GIT_CLIENT_SECRET "${{ secrets.GIT_CLIENT_SECRET }}" \
+            --arg GOOGLE_CLIENT_ID "${{ secrets.GOOGLE_CLIENT_ID }}" \
+            --arg GOOGLE_CLIENT_SECRET "${{ secrets.GOOGLE_CLIENT_SECRET }}" \
+            '{
+              DATABASE_URL: $DATABASE_URL,
+              NEXTAUTH_JWT_SECRET: $NEXTAUTH_JWT_SECRET,
+              NEXTAUTH_SECRET: $NEXTAUTH_SECRET,
+              NEXTAUTH_URL: $NEXTAUTH_URL,
+              NEXT_PUBLIC_API_BASE_URL: $NEXT_PUBLIC_API_BASE_URL,
+              GIT_CLIENT_ID: $GIT_CLIENT_ID,
+              GIT_CLIENT_SECRET: $GIT_CLIENT_SECRET,
+              GOOGLE_CLIENT_ID: $GOOGLE_CLIENT_ID,
+              GOOGLE_CLIENT_SECRET: $GOOGLE_CLIENT_SECRET
+            }')
+          
+          echo "Deploying secret $SECRET_NAME"
+          
+          aws secretsmanager update-secret --secret-id "$SECRET_NAME" --secret-string "$SECRET_STRING" || \
+          aws secretsmanager create-secret --name "$SECRET_NAME" --secret-string "$SECRET_STRING"
+          
+          # Retrieve the ARN from the secret
+          SECRET_ARN=$(aws secretsmanager describe-secret --secret-id "$SECRET_NAME" --query 'ARN' --output text)
+          echo "Secret ARN: $SECRET_ARN"
+          
+          # Set the secret ARN as an output for later steps
+          echo "::set-output name=secret_arn::$SECRET_ARN"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -88,6 +130,8 @@ jobs:
           terraform_version: 1.3.6
 
       - name: Terraform Init, Plan, and Apply
+        env:
+          SECRET_ARN: ${{ steps.deploy_secrets.outputs.secret_arn }}
         working-directory: terraform/netflixclone
         run: |
           terraform init \
@@ -99,5 +143,6 @@ jobs:
           terraform plan \
             -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
             -var="ecr_repository_url=${{ secrets.ECR_REPOSITORY_URL }}" \
+            -var="secrets_arn=$SECRETS_ARN" \
             -out=tfplan
           terraform apply -auto-approve tfplan

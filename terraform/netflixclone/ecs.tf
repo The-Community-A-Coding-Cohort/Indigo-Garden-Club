@@ -39,6 +39,14 @@ resource "aws_ecs_task_definition" "task" {
         hostPort      = 3000,
         protocol      = "tcp"
       }]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_log_group.name
+          "awslogs-region"        = "us-east-1"
+          "awslogs-stream-prefix" = "nextjs"
+        }
+      }
     }
   ])
 }
