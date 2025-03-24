@@ -39,6 +39,12 @@ resource "aws_ecs_task_definition" "task" {
         hostPort      = 3000,
         protocol      = "tcp"
       }]
+      secrets = [
+        {
+          name      = "APP_SECRETS"
+          valueFrom = "${var.secrets_arn}"
+        }
+      ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {

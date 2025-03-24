@@ -15,3 +15,7 @@ variable "hosted_zone_id" {
 variable "ecr_repository_url" {
   description = "URL of the ECR container registry in AWS (Set up beforehand named nextjs)"
 }
+
+variable "secrets_arn" {
+  description = "ARN of the secret which contains the environment variables of the app"
+}
