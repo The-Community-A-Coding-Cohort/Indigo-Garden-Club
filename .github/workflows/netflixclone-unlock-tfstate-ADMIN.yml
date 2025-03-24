@@ -1,4 +1,4 @@
-name: Unlock tfstate (Admin only)
+name: NetflixClone - Unlock tfstate (Admin only)
 
 on:
   workflow_dispatch:
