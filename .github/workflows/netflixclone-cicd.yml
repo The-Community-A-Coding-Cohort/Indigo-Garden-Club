@@ -46,7 +46,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: ecr-login
-        uses: aws-actions/amazon-ecr-login@v1.4.0
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build and Push Docker Image Conditionally
         id: build_image
@@ -81,7 +81,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: ecr-login
-        uses: aws-actions/amazon-ecr-login@v1.4.0
+        uses: aws-actions/amazon-ecr-login@v2
       
       - name: Deploy Secrets to AWS Secrets Manager and get ARN
         id: deploy_secrets
