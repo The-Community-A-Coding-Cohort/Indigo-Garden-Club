@@ -1,9 +1,9 @@
-name: CI/CD
+name: NetflixClone - CI/CD
 
 on:
   push:
     branches:
-      - main
+      - NetflixClone
 
 jobs:
 

@@ -1,4 +1,4 @@
-name: Terraform Destroy (Admin only)
+name: NetflixClone - Terraform Destroy (Admin only)
 
 on:
   workflow_dispatch:
