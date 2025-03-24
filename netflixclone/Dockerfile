@@ -10,6 +10,7 @@ WORKDIR /app
 # Copy node_modules from deps and the source code
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npx prisma generate
 RUN npm run build
 
 # 3 ---- Production image ----
