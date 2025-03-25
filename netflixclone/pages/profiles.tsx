@@ -44,7 +44,7 @@ const Profiles = () => {
                               group-hover:border-white
                               overflow-hidden"
                             >
-                                <Image src="/images/blueDefaultGuy.jpg" alt="Profile"/>
+                                <Image src="/images/blueDefaultGuy.jpg" alt="Profile" width="250" height="250"/>
                             </div>
                             <div className="
                               mt-4
