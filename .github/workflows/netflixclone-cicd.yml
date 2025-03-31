@@ -123,4 +123,5 @@ jobs:
             -var="ecr_repository_url=${{ secrets.ECR_REPOSITORY_URL }}:${IMAGE_TAG}" \
             -var="secrets_arn=$SECRET_ARN" \
             -out=tfplan
+          terraform apply -auto-approve -target=aws_acm_certificate.cert
           terraform apply -auto-approve tfplan
