@@ -16,6 +16,13 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Get Secret ARN
+        id: deploy_secrets
+        run: |
+          SECRET_NAME="nextjs-secrets"
+          SECRET_ARN=$(aws secretsmanager describe-secret --secret-id "$SECRET_NAME" --query 'ARN' --output text)
+          echo "secret_arn=$SECRET_ARN" >> "$GITHUB_OUTPUT"
         
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -37,4 +44,5 @@ jobs:
         run: |
           terraform destroy -auto-approve \
             -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
-            -var="ecr_repository_url=${{ secrets.ECR_REPOSITORY_URL }}"
+            -var="ecr_repository_url=${{ secrets.ECR_REPOSITORY_URL }}" \
+            -var="secrets_arn=$SECRET_ARN"

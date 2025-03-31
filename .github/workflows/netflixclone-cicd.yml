@@ -13,7 +13,7 @@ jobs:
       built: ${{ steps.build_image.outputs.built }}
     env:
       ECR_REPOSITORY: nextjs
-      # Use the commit SHA as a unique image tag.
+      # Use the commit SHA as a unique image tag for linkage
       IMAGE_TAG: ${{ github.sha }}
     steps:
       - name: Checkout Code
@@ -44,6 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: nextjs
+      # Use the SHA as a unique image tag for linkage
       IMAGE_TAG: ${{ github.sha }}
     steps:
       - name: Checkout Code
