@@ -118,7 +118,10 @@ jobs:
             -backend-config="region=us-east-1" \
             -backend-config="dynamodb_table=terraform-locks" \
             -backend-config="encrypt=true"
-          terraform apply -target=aws_acm_certificate.cert -auto-approve
+          terraform apply -target=aws_acm_certificate.cert -auto-approve \
+            -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
+            -var="ecr_repository_url=${{ secrets.ECR_REPOSITORY_URL }}:${IMAGE_TAG}" \
+            -var="secrets_arn=$SECRET_ARN"
           terraform plan \
             -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
             -var="ecr_repository_url=${{ secrets.ECR_REPOSITORY_URL }}:${IMAGE_TAG}" \
