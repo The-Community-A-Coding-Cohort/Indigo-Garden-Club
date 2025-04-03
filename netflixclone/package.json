@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:open": "concurrently -k \"next dev\" \"wait-on http://localhost:3000 && npx open http://localhost:3000\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
