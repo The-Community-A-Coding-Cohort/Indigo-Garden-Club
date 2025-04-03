@@ -8,15 +8,7 @@ Welcome to **Indigo Garden Club** – a Next.js application where you can stream
 
 Indigo Garden Club is a responsive web application that allows users to explore and stream a curated collection of indie films. With a focus on community and fair returns for filmmakers, the platform provides an intuitive interface, smooth streaming, and interactive features for movie enthusiasts.
 
-This is the Final Project of the Triple10 Web Dev Program. In this project we practice:
-- **HTML Semantics:** Structuring content meaningfully for accessibility and SEO.
-- **CSS Properties, Grid, and Flexbox Layouts:** Building responsive and visually appealing designs.
-- **Responsive Web Design & Media Queries:** Adapting layouts for different screen sizes.
-- **Modern JavaScript (ES6+) & Next.js:** Creating dynamic, component-based user interfaces.
-- **RESTful APIs:** Integrating external data sources with API calls.
-- **Version Control with Git & GitHub:** Managing code changes and collaborating effectively.
-- **Code Quality Practices:** Enforcing consistency with ESLint and best practices.
-- **Deployment:** Publishing the final project on AWS using Terraform via GitHub Actions.
+TODO: Include impressive technologies used
 
 ---
 
