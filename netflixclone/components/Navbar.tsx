@@ -48,7 +48,7 @@ const Navbar = () => {
             bg-opacity-90
             ${showBackground ? 'bg-zinc-900 bg-opacity-90': ''}`}>
                 
-                <Image className="h-4 lg:h-7" src="/images/netflixLogo.png" alt="logo" width="50" height="10"/>
+                <Image className="h-4 lg:h-7" src="/images/logo.png" alt="logo" width="50" height="10"/>
                 <div className="
                 flex-row
                 ml-8

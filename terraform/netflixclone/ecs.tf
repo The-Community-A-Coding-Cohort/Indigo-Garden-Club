@@ -2,25 +2,6 @@ resource "aws_ecs_cluster" "cluster" {
   name = "nextjs-cluster"
 }
 
-resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecsTaskExecutionRole"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Action    = "sts:AssumeRole",
-      Effect    = "Allow",
-      Principal = {
-        Service = "ecs-tasks.amazonaws.com"
-      }
-    }]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy" {
-  role       = aws_iam_role.ecs_task_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}
-
 resource "aws_ecs_task_definition" "task" {
   family                   = "nextjs-task"
   network_mode             = "awsvpc"
@@ -28,17 +9,60 @@ resource "aws_ecs_task_definition" "task" {
   cpu                      = "256"
   memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
 
   container_definitions = jsonencode([
     {
       name      = "nextjs"
-      image     = "${aws_ecr_repository.nextjs.repository_url}:latest"
+      image     = "${var.ecr_repository_url}"
       essential = true
       portMappings = [{
         containerPort = 3000,
         hostPort      = 3000,
         protocol      = "tcp"
       }]
+      secrets = [
+        {
+          name      = "DATABASE_URL"
+          valueFrom = "${var.secrets_arn}:DATABASE_URL::"
+        },
+        {
+          name      = "NEXTAUTH_SECRET"
+          valueFrom = "${var.secrets_arn}:NEXTAUTH_SECRET::"
+        },
+        {
+          name      = "NEXTAUTH_URL"
+          valueFrom = "${var.secrets_arn}:NEXTAUTH_URL::"
+        },
+        {
+          name      = "NEXT_PUBLIC_API_BASE_URL"
+          valueFrom = "${var.secrets_arn}:NEXT_PUBLIC_API_BASE_URL::"
+        },
+        {
+          name      = "GIT_CLIENT_ID"
+          valueFrom = "${var.secrets_arn}:GIT_CLIENT_ID::"
+        },
+        {
+          name      = "GIT_CLIENT_SECRET"
+          valueFrom = "${var.secrets_arn}:GIT_CLIENT_SECRET::"
+        },
+        {
+          name      = "GOOGLE_CLIENT_ID"
+          valueFrom = "${var.secrets_arn}:GOOGLE_CLIENT_ID::"
+        },
+        {
+          name      = "GOOGLE_CLIENT_SECRET"
+          valueFrom = "${var.secrets_arn}:GOOGLE_CLIENT_SECRET::"
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_log_group.name
+          "awslogs-region"        = "us-east-1"
+          "awslogs-stream-prefix" = "nextjs"
+        }
+      }
     }
   ])
 }
@@ -51,7 +75,7 @@ resource "aws_ecs_service" "service" {
   desired_count   = 1
 
   network_configuration {
-    subnets         = var.subnets
+    subnets         = [for subnet in aws_subnet.public : subnet.id]
     security_groups = [aws_security_group.ecs_sg.id]
     assign_public_ip = true
   }
@@ -62,5 +86,5 @@ resource "aws_ecs_service" "service" {
     container_port   = 3000
   }
 
-  depends_on = [aws_lb_listener.https]
+  depends_on = [aws_lb_listener.https, aws_subnet.public]
 }

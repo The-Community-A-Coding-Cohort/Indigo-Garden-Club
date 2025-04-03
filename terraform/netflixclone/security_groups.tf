@@ -1,7 +1,7 @@
 resource "aws_security_group" "alb_sg" {
   name        = "alb-sg"
   description = "Allow HTTP and HTTPS traffic"
-  vpc_id      = var.vpc_id
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     description = "Allow HTTP"
@@ -30,7 +30,7 @@ resource "aws_security_group" "alb_sg" {
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs-sg"
   description = "Allow traffic from ALB to ECS tasks"
-  vpc_id      = var.vpc_id
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     description     = "Allow ALB traffic"

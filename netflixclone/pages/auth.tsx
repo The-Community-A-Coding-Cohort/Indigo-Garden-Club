@@ -50,12 +50,13 @@ const Auth = () => {
   return (
     <div className="relative min-h-screen w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
       <nav className="px-12 py-5">
+        {/* <Image src="/images/logo.png" alt="Logo" className="h-12" width="300" height="1000" /> */}
         <Image
-          src="/images/netflixLogo.png"
+          src="/images/logo.png"
           alt="Logo"
-          className="h-12"
-          width={100}
-          height={100}
+          className="h-24"
+          width="300"
+          height="1000"
         />
       </nav>
       <div className="flex justify-center">
