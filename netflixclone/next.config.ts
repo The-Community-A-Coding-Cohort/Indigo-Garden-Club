@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
       "download.blender.org",
       "en.wikipedia.org",
     ],
+    deviceSizes: [320, 420, 768, 1024, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    formats: ["image/webp", "image/avif"],
+    minimumCacheTTL: 60,
+  },
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
   },
 };
 

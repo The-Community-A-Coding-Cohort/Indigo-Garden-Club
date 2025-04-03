@@ -1,10 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import {
-  AiOutlineArrowLeft,
-  AiOutlineHeart,
-  AiOutlineShareAlt,
-} from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineShareAlt } from "react-icons/ai";
 import { BiCalendar, BiTimeFive, BiCategory } from "react-icons/bi";
 import MuxPlayerReact from "@mux/mux-player-react";
 import Image from "next/image";
@@ -171,8 +167,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     });
 
     // Fetch asset data from Mux
-    const asset_data = await mux_env.video.assets.retrieve(movie.assetId);
-
+    let asset_data;
+    try {
+      asset_data = await mux_env.video.assets.retrieve(movie.assetId);
+    } catch (error) {
+      console.log(error);
+      return {
+        props: {
+          movie: JSON.parse(JSON.stringify(movie)),
+        },
+      };
+    }
     return {
       props: {
         movie: JSON.parse(JSON.stringify(movie)),

@@ -34,9 +34,13 @@ export default async function handler(
       return new Error("Invalid ID");
     }
 
-    const asset_data = await mux_env.video.assets.retrieve(movie.assetId);
-
-    return res.status(200).json({ movie, asset_data });
+    try {
+      const asset_data = await mux_env.video.assets.retrieve(movie.assetId);
+      return res.status(200).json({ movie, asset_data });
+    } catch (error) {
+      console.log(error);
+      return res.status(200).json({ movie });
+    }
   } catch (error) {
     console.log(error);
     return res.status(400).end();
