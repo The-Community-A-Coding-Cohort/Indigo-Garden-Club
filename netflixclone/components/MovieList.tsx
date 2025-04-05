@@ -1,6 +1,7 @@
 import React from "react";
 import { isEmpty } from "lodash";
 import MovieCard from "./MovieCard";
+import Head from "next/head";
 
 interface Movie {
   id: string;
@@ -12,10 +13,9 @@ interface Movie {
 
 interface MovieListProps {
   data: Movie[] | { [key: string]: Movie }; // Accept either an array or an object with movie values.
-  title: string;
 }
 
-const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
+const MovieList: React.FC<MovieListProps> = ({ data }) => {
   if (isEmpty(data)) {
     return null;
   }
@@ -28,17 +28,37 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
     movies = Object.values(data);
   }
 
+  // Get the first 4 movies for preloading
+  const topMovies = movies.slice(0, 4);
+
   return (
-    <div className="px-4 md:px-12 mt-4 space-y-8">
-      <p className="text-white text-md md:text-xl lg:text-2xl font-semibold mb-4">
-        {title}
-      </p>
-      <div className="grid grid-cols-4 gap-2">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} data={movie} title={movie.title}/>
+    <>
+      <Head>
+        {/* Preload critical images */}
+        {topMovies.map((movie) => (
+          <link
+            key={`preload-${movie.id}`}
+            rel="preload"
+            href={movie.thumbnailUrl}
+            as="image"
+            type="image/webp"
+          />
         ))}
+      </Head>
+      <div className="xl:px-8 px-4 mt-4 space-y-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 w-full">
+          {movies.slice(0, 2).map((movie, index) => (
+            <div key={movie.id} className="w-full">
+              <MovieCard
+                data={movie}
+                title={movie.title}
+                isPriority={index < 4} // Only set priority for the first 4 movies
+              />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
