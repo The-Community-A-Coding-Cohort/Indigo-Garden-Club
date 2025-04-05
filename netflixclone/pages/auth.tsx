@@ -1,5 +1,4 @@
-import React from 'react';
-import axios from 'axios';
+import axios from "axios";
 import { SetStateAction, useCallback, useState } from "react";
 import Input from "../components/Input";
 import { signIn } from "next-auth/react";
