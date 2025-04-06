@@ -28,6 +28,7 @@ jobs:
 
 
   build:
+    needs: test
     runs-on: ubuntu-latest
     outputs:
       built: ${{ steps.build_image.outputs.built }}
