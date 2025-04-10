@@ -14,6 +14,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model RequestToAddFilm {
+	id String @id @default(auto()) @map("_id") @db.ObjectId
+	email String? @unique
+	createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model NewsletterSubscriber {
+	id String @id @default(auto()) @map("_id") @db.ObjectId
+	email String? @unique
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+}
+
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
