@@ -27,7 +27,7 @@ TODO: Include impressive technologies used
 
 ## Environment Variables
 
-To run this project, create a `.env` file in the root directory with the following keys. **Do not disclose these secrets publicly!**
+To run this project locally, create a `.env` file in the @/netflixclone directory with the following keys. **Do not disclose these secrets publicly!**
 ```
 DATABASE_URL=
 
@@ -41,6 +41,9 @@ GIT_CLIENT_SECRET=
 
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+
+MUX_TOKEN_ID=
+MUX_TOKEN_SECRET=
 ```
 
 ---
@@ -62,6 +65,9 @@ NEXTAUTH_SECRET
 NEXTAUTH_URL
 NEXT_PUBLIC_API_BASE_URL
 VALIDATION_RECORD_FQDNS
+MUX_TOKEN_ID
+MUX_TOKEN_SECRET
+
 
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
