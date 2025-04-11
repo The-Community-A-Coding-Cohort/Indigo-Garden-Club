@@ -27,7 +27,7 @@ TODO: Include impressive technologies used
 
 ## Environment Variables
 
-To run this project locally, create a `.env` file in the root director (not the /netflixclone/ directory) with the following keys. **Do not disclose these secrets publicly!**
+To run this project locally, create a `.env` file in the @/netflixclone directory with the following keys. **Do not disclose these secrets publicly!**
 ```
 DATABASE_URL=
 
