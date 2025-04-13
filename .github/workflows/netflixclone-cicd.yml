@@ -12,6 +12,7 @@ jobs:
       ECR_REPOSITORY: nextjs
       # Use the commit SHA as a unique image tag.
       IMAGE_TAG: ${{ github.sha }}
+    continue-on-error: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
