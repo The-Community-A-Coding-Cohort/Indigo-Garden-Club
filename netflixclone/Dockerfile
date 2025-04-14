@@ -1,11 +1,11 @@
 # 1 ---- Install dependencies ----
-FROM node:20-alpine AS deps
+FROM --platform=linux/amd64 node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 
 # 2 ---- Build the application ----
-FROM node:20-alpine AS builder
+FROM --platform=linux/amd64 node:20-alpine AS builder
 WORKDIR /app
 # Copy node_modules from deps and the source code
 COPY --from=deps /app/node_modules ./node_modules
@@ -17,11 +17,11 @@ RUN apk update && \
 # Native dependencies must be rebuilt or installed in the same stage as build
 RUN export PYTHON=$(which python3) && npm rebuild bcrypt --build-from-source
 RUN npm rebuild lightningcss
-RUN npm install @tailwindcss/oxide-linux-arm64-musl
+RUN npm install --save-dev @tailwindcss/oxide-linux-x64-musl
 RUN npm run build
 
 # 3 ---- Production image ----
-FROM node:20-alpine AS runner
+FROM --platform=linux/amd64 node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV production
 # Copy built application and dependencies

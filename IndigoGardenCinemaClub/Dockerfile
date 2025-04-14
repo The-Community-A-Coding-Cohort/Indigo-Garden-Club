@@ -1,5 +1,5 @@
 # 1 ---- Install dependencies ----
-FROM node:23-bullseye-slim AS deps
+FROM --platform=linux/amd64 node:23-bullseye-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
@@ -7,18 +7,18 @@ RUN npm ci
 RUN npm rebuild lightningcss
 
 # 2 ---- Build the application ----
-FROM node:23-bullseye-slim AS builder
+FROM --platform=linux/amd64 node:23-bullseye-slim AS builder
 WORKDIR /app
 # Copy node_modules from deps and the source code
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # OS Specific and cannot be installed on all OS, but required for alpine
 RUN npx prisma generate
-RUN npm install --save-dev @tailwindcss/oxide-linux-arm64-gnu
+RUN npm install --save-dev @tailwindcss/oxide-linux-x64-musl
 RUN npm run build
 
 # 3 ---- Production image ----
-FROM node:23-bullseye-slim AS runner
+FROM --platform=linux/amd64 node:23-bullseye-slim AS runner
 WORKDIR /app
 # Set the port for the application to run on to be 3001
 ENV PORT 3001
