@@ -14,7 +14,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # OS Specific and cannot be installed on all OS, but required for alpine
 RUN npx prisma generate
-RUN npm install --save-dev @tailwindcss/oxide-linux-x64-musl
+RUN npm install --save-dev @tailwindcss/oxide-linux-x64-gnu
 RUN npm run build
 
 # 3 ---- Production image ----
