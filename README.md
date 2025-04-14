@@ -94,6 +94,16 @@ npm run build
 npm run deploy
 ```
 
+### Docker
+
+To install Docker follow [this guide for Windows](https://www.youtube.com/watch?v=ZyBBv1JmnWQ). If you are on mac simply install [at the official site](https://docs.docker.com/desktop/setup/install/mac-install/). If you're on linux you can figure it out.
+
+Docker is the fastest way to get both the current and the legacy app running locally at the same time. The legacy will run at port 3000 and the newer version will run at port 3001. Simply run the following command:
+
+```bash
+docker compose up --build
+```
+
 ---
 
 ## System Requirements 💻

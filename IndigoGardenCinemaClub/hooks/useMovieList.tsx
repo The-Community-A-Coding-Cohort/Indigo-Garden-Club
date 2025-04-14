@@ -12,7 +12,7 @@ const useMovieList = () => {
     errorRetryInterval: 5000, // Retry on error after 5 seconds
     errorRetryCount: 3, // Maximum of 3 retries on error
   });
-
+  console.log(data)
   return { data, error, isLoading };
 };
 export default useMovieList;

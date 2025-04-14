@@ -20,8 +20,10 @@ RUN npm run build
 # 3 ---- Production image ----
 FROM node:23-bullseye-slim AS runner
 WORKDIR /app
-ENV NODE_ENV production
+# Set the port for the application to run on to be 3001
+ENV PORT 3001
 # Copy built application and dependencies
+COPY .env .env
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/next.config.ts ./
 COPY --from=builder /app/public ./public

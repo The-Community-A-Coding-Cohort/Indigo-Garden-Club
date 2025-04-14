@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 # Rebuild native modules for the current architecture
-RUN npm rebuild lightningcss
+RUN npm rebuild lightningcss bcrypt
 
 # 2 ---- Build the application ----
 FROM node:23-bullseye-slim AS builder
@@ -20,8 +20,8 @@ RUN npm run build
 # 3 ---- Production image ----
 FROM node:23-bullseye-slim AS runner
 WORKDIR /app
-ENV NODE_ENV production
 # Copy built application and dependencies
+COPY .env .env
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/next.config.ts ./
 COPY --from=builder /app/public ./public
