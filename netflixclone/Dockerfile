@@ -1,20 +1,21 @@
 # 1 ---- Install dependencies ----
-FROM node:20-alpine AS deps
+FROM node:20-bullseye AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 
 # 2 ---- Build the application ----
-FROM node:20-alpine AS builder
+FROM node:20-bullseye AS builder
 WORKDIR /app
 # Copy node_modules from deps and the source code
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# OS Specific and cannot be installed on all OS, but required for alpine
 RUN npx prisma generate
 RUN npm run build
 
 # 3 ---- Production image ----
-FROM node:20-alpine AS runner
+FROM node:20-bullseye AS runner
 WORKDIR /app
 ENV NODE_ENV production
 # Copy built application and dependencies
