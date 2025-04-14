@@ -15,6 +15,7 @@ node_modules/
 /coverage
 
 # next.js
+IndigoGardenCinemaClub/.next/
 netflixclone/.next/
 
 # production
