@@ -78,30 +78,11 @@ AWS_SECRET_ACCESS_KEY
 ## Deployment 🚀
 
 ### Install Dependencies
-
-To install node follow this guide for node version manager [nvm installation](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/). Or if you are on mac simply do
-```bash
-brew install node
-```
-
-Remember to first change your directory to either netflixclone or IndigoGardenCinemaClub or these commands will not work.
-
 ```bash
 npm install
-npx prisma generate
 npm run dev
 npm run build
 npm run deploy
-```
-
-### Docker
-
-To install Docker follow [this guide for Windows](https://www.youtube.com/watch?v=ZyBBv1JmnWQ). If you are on mac simply install [at the official site](https://docs.docker.com/desktop/setup/install/mac-install/). If you're on linux you can figure it out.
-
-Docker is the fastest way to get both the current and the legacy app running locally at the same time. The legacy will run at port 3000 and the newer version will run at port 3001. Simply run the following command:
-
-```bash
-docker compose up --build
 ```
 
 ---

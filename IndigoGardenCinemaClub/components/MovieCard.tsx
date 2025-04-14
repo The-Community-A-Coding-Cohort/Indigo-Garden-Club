@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import OptimizedImage from "./OptimizedImage";
+// import OptimizedImage from "./OptimizedImage";
+import Image from "next/image";
 
 interface Movie {
   id: string;
@@ -57,7 +58,8 @@ const MovieCard: React.FC<MovieCardProps> = ({
           className="group bg-zinc-900 relative w-full aspect-[2/3] overflow-hidden max-w-[360px] h-full"
           style={{ aspectRatio: "2/3" }} // Enforce aspect ratio via inline style as a fallback
         >
-          <OptimizedImage
+          {/* replace with optimized image */}
+          <Image
             className="object-cover transition duration-200 group-hover:opacity-80"
             src={data?.thumbnailUrl}
             alt="Thumbnail"

@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  netflixclone:
+    build:
+      context: ./netflixclone
+      dockerfile: Dockerfile
+    # Maps container port 3000 to host port 3000
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  current:
+    build:
+      context: ./IndigoGardenCinemaClub
+      dockerfile: Dockerfile
+    # Maps container port 3001 to host port 3001 (see package.json)
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
