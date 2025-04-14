@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Big Buck Bunny",
+    "description": "Three rodents amuse themselves by harassing creatures of the forest.",
+    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/Blender3D_vorderseite_big_bug.jpg",
+    "genre": "Comedy",
+    "duration": "10 minutes"
+  },
+  {
+    "title": "Sintel",
+    "description": "A lonely young woman, Sintel, helps and befriends a dragon.",
+    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+    "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Sintel_poster.jpg",
+    "genre": "Adventure",
+    "duration": "15 minutes"
+  },
+  {
+    "title": "Tears of Steel",
+    "description": "In an apocalyptic future, a group of soldiers and scientists takes refuge in...",
+    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+    "thumbnailUrl": "https://mango.blender.org/wp-content/uploads/2012/09/tos-poster.jpg",
+    "genre": "Action",
+    "duration": "12 minutes"
+  },
+  {
+    "title": "Elephant's Dream",
+    "description": "Friends Proog and Emo journey inside the folds of a seemingly infinite Machine!",
+    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    "thumbnailUrl": "https://en.wikipedia.org/wiki/Elephants_Dream#/media/File:ElephantsDreamPoster.jpg",
+    "genre": "Sci-Fi",
+    "duration": "15 minutes"
+  }
+]
