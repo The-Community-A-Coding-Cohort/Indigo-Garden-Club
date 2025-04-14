@@ -3,6 +3,8 @@ FROM node:20-bullseye AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
+# Rebuild native modules for the current architecture
+RUN npm rebuild lightningcss
 
 # 2 ---- Build the application ----
 FROM node:20-bullseye AS builder
@@ -12,6 +14,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # OS Specific and cannot be installed on all OS, but required for alpine
 RUN npx prisma generate
+RUN npm install --save-dev @tailwindcss/oxide-linux-arm64-gnu
 RUN npm run build
 
 # 3 ---- Production image ----
