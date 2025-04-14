@@ -1,0 +1,52 @@
+name: NetflixClone - Terraform Destroy (Admin only)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Get Secret ARN
+        id: deploy_secrets
+        run: |
+          SECRET_NAME="nextjs-secrets"
+          SECRET_ARN=$(aws secretsmanager describe-secret --secret-id "$SECRET_NAME" --query 'ARN' --output text)
+          echo "secret_arn=$SECRET_ARN" >> "$GITHUB_OUTPUT"
+        
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.3.6
+
+      - name: Terraform Init
+        working-directory: terraform/netflixclone
+        run: |
+          terraform init \
+            -backend-config="bucket=the-community-a-coding-cohort-tf-state-bucket" \
+            -backend-config="key=nextjs/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=terraform-locks" \
+            -backend-config="encrypt=true"
+
+      - name: Terraform Destroy
+        working-directory: terraform/netflixclone
+        run: |
+          terraform destroy -auto-approve \
+            -var="hosted_zone_id=${{ secrets.HOSTED_ZONE_ID }}" \
+            -var="ecr_repository_url=${{ secrets.ECR_REPOSITORY_URL }}" \
+            -var="secrets_arn=$SECRET_ARN"
+
+      - name: Delete Secrets
+        run: |
+          aws secretsmanager delete-secret --secret-id "${{ steps.deploy_secrets.outputs.secret_arn }}" --force-delete-without-recovery

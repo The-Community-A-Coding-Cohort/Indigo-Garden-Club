@@ -78,8 +78,17 @@ AWS_SECRET_ACCESS_KEY
 ## Deployment 🚀
 
 ### Install Dependencies
+
+To install node follow this guide for node version manager [nvm installation](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/). Or if you are on mac simply do
+```bash
+brew install node
+```
+
+Remember to first change your directory to either netflixclone or IndigoGardenCinemaClub or these commands will not work.
+
 ```bash
 npm install
+npx prisma generate
 npm run dev
 npm run build
 npm run deploy
