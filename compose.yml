@@ -5,6 +5,8 @@ services:
     build:
       context: ./netflixclone
       dockerfile: Dockerfile
+    env_file:
+      - ./netflixclone/.env  
     # Maps container port 3000 to host port 3000
     ports:
       - "3000:3000"
@@ -14,6 +16,8 @@ services:
     build:
       context: ./IndigoGardenCinemaClub
       dockerfile: Dockerfile
+    env_file:
+      - ./IndigoGardenCinemaClub/.env  
     # Maps container port 3001 to host port 3001 (see package.json)
     ports:
       - "3001:3001"
