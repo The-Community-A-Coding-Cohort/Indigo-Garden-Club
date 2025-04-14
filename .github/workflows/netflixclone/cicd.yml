@@ -3,7 +3,7 @@ name: NetflixClone - CI/CD
 on:
   push:
     branches:
-      - NetflixClone
+      - main
 
 jobs:
 

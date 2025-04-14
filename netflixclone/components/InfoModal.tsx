@@ -19,7 +19,7 @@ const InfoModal: React.FC<InfoModalProps> = (props: InfoModalProps) => {
         setIsVisible(!!props.visible);
     }, [props.visible]);
 
-    const handleClose = useCallback(() => {
+    const handleClose: React.MouseEventHandler<HTMLDivElement> = useCallback(() => {
         setIsVisible(false);
         setTimeout(() => {
             props.onClose();
