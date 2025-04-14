@@ -1,25 +1,29 @@
 # 1 ---- Install dependencies ----
-FROM node:23-bullseye-slim AS deps
+FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
-# Rebuild native modules for the current architecture
-RUN npm rebuild lightningcss bcrypt
 
 # 2 ---- Build the application ----
-FROM node:23-bullseye-slim AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 # Copy node_modules from deps and the source code
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# OS Specific and cannot be installed on all OS, but required for alpine
 RUN npx prisma generate
-RUN npm install --save-dev @tailwindcss/oxide-linux-arm64-gnu
+# Install required build tools for native modules
+RUN apk update && \
+    apk add --no-cache python3 make g++
+# Native dependencies must be rebuilt or installed in the same stage as build
+RUN export PYTHON=$(which python3) && npm rebuild bcrypt --build-from-source
+RUN npm rebuild lightningcss
+RUN npm install @tailwindcss/oxide-linux-arm64-musl
 RUN npm run build
 
 # 3 ---- Production image ----
-FROM node:23-bullseye-slim AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
+ENV NODE_ENV production
 # Copy built application and dependencies
 COPY .env .env
 COPY --from=builder /app/package.json ./
