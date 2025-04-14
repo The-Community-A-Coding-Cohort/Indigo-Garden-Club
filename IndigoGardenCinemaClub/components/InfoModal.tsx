@@ -15,16 +15,18 @@ const InfoModal: React.FC<InfoModalProps> = (props: InfoModalProps) => {
     const { movieId } = useInfoModal();
     const { data = {} } = useMovie(movieId);
 
+    const { onClose } = props;
+
     useEffect(() => {
         setIsVisible(!!props.visible);
     }, [props.visible]);
 
-    const handleClose = useCallback(() => {
+    const handleClose: React.MouseEventHandler<HTMLDivElement> = useCallback(() => {
         setIsVisible(false);
         setTimeout(() => {
-            props.onClose();
+            onClose();
         }, 300);
-    }, [props.onClose]);
+    }, [onClose]);
 
     if(!props.visible){
         return null;

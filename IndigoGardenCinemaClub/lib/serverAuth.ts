@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 
-import prismadb from "./prismadb";
+// import prismadb from "./prismadb";
 
 const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   // console.log(`in serverAuth requests begin`)
