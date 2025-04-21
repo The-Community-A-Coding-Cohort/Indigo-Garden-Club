@@ -5,12 +5,18 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import Auth from '../pages/auth';
 import { signIn } from 'next-auth/react';
+// import axios from 'axios';
 
 
 describe('testing auth.tsx: ', () => {
     let authComponent: RenderResult
+    const signInMock = jest.spyOn(require('next-auth/react'), 'signIn');
+    const axiosPostMock = jest.spyOn(require('axios'), 'post')
+
     beforeEach(() => {
         authComponent = render(<Auth />);
+        signInMock.mockResolvedValue({ ok: true });
+        axiosPostMock.mockResolvedValue({ status: 200 });
     })
     test('should render', () => {
         // render(<Auth />);
@@ -39,20 +45,10 @@ describe('testing auth.tsx: ', () => {
         expect(registerVarientHeader.textContent).toBe('Register')
     });
     test('should login', async () => {
-        const signInMock = signIn as jest.Mock;
-        signInMock.mockResolvedValue({ ok: true });
-
-
-        // jest.mock('signIn', () => {
-        //     console.log('this is mocked signIn')
-        // });
-        
         const emailField = screen.getByLabelText('Email', { selector: 'input' });
         const passwordField = screen.getByLabelText('Password', { selector: 'input' });
         const loginButton = screen.getByText('Login', { selector: 'button' });
 
-        // expect(emailField).toBeDefined();
-        // emailField.insertAdjacentText(emailField, 'test');
         await userEvent.type(emailField, 'user@example.com');
         await userEvent.type(passwordField, 'user123');
         
@@ -61,16 +57,39 @@ describe('testing auth.tsx: ', () => {
 
         await userEvent.click(loginButton);
         expect(signInMock).toHaveBeenCalled();
-        // expect(signIn).toHaveBeenCalledWith('credentials', {
-        //    gvit email: 'user@example.com',
-        //     password: 'user123',
-        //     redirect: false,
-        // });
+        expect(signIn).toHaveBeenCalledWith('credentials', {
+            email: 'user@example.com',
+            password: 'user123',
+            callbackUrl: '/profiles'
+        });
 
     });
-    // test('should register', async () => {
-    //     //
-    //     const userNameField = await screen.getByLabelText("Email");
-    //     userNameField.click
-    // });
+    test('should register', async () => {
+        const loginVariantButton = await screen.findByText('Create an account');
+        loginVariantButton.click();
+
+        const registerVarientHeader = await screen.findByText('Register');
+        expect(registerVarientHeader.textContent).toBe('Register')
+
+        const usernameField = screen.getByLabelText('Username', { selector: 'input' });
+        const emailField = screen.getByLabelText('Email', { selector: 'input' });
+        const passwordField = screen.getByLabelText('Password', { selector: 'input' });
+        const loginButton = screen.getByText('Sign up', { selector: 'button' });
+
+        await userEvent.type(usernameField, 'user123');
+        await userEvent.type(emailField, 'user@example.com');
+        await userEvent.type(passwordField, 'user123');
+
+        await userEvent.click(loginButton);
+        expect(axiosPostMock).toHaveBeenCalledWith('/api/register', {
+            name: 'user123',
+            email: 'user@example.com',
+            password: 'user123',
+        });
+        expect(signIn).toHaveBeenCalledWith('credentials', {
+            email: 'user@example.com',
+            password: 'user123',
+            callbackUrl: '/profiles'
+        });
+    });
 })

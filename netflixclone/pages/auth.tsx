@@ -23,6 +23,7 @@ const Auth = () => {
 
     const login = useCallback(async () => {
         try {
+          console.log('clicked test button');
             await signIn('credentials', {
                 email,
                 password,
