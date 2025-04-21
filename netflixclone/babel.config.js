@@ -1,3 +1,4 @@
+console.log('USING JEST')
 // babel.config.js
 module.exports = {
     presets: [
